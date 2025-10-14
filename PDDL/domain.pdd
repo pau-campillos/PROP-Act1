@@ -1,0 +1,12 @@
+(define (domain MapaA)
+	(:requirements :strips :equality :typing)
+	(:types TCASELLA TPARET TCLAU TPORTA TSORTIDA TAGENT)
+	(:predicates
+		(EsClau ?clau - TCLAU ?casella - TCASELLA )
+		(Veina ?casella ?casella - TCASELLA)
+		(EsParet ?paret - TPARET ?casella - TCASELLA)
+		(EsEspai ?casella - TCASELLA)
+		(EsPorta ?porta - TPORTA ?casella - TCASELLA)
+		(EsSortida ?sortida - TSORTIDA ?casella - TCASELLA)
+		(EsAgent ?agent - TAGENT ?casella - TCASELLA)
+    	)
