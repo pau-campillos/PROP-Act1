@@ -209,6 +209,39 @@ public class Mapa {
         List<Moviment> res = new ArrayList<>();
         // ===============================================
         //@TODO: A IMPLEMENTAR !!!!!!
+        List<Posicio> agents;
+        int IDdelAgent = 0;
+        for (Posicio p : agents){
+            IDdelAgent = IDdelAgent + 1 ;
+            
+            for (Direccio dir : Direccio.values() ){
+                Posicio aMoure = (p.x + di.x, p.y + di.y);
+                //PARET, ESPAI, SORTIDA
+                int casella = getCell(aMoure);
+                if (casella == ESPAI){
+                    Moviment mov (IDdelAgent, dir, false);
+                    res.add(mov); // No si alla hi ha algun agent
+                }
+                else if (casella == SORTIDA){
+                    Moviment mov (IDdelAgent, dir, false);
+                    res.add(mov);
+                }
+                else if (Character.isUpperCase(casella) && casella.portaObrible()){ // Porta
+                    Moviment mov (IDdelAgent, dir, false);
+                    res.add(mov); // No si alla hi ha algun agent
+                }
+                else if (Character.isLowerCase(casella)){ // Clau
+                    if (!teClau(Character.toLowerCase((char) casella))) {
+                        Moviment mov (IDdelAgent, dir, true);
+                        res.add(mov); // No si alla hi ha algun agent
+                    }
+                    else {
+                        Moviment mov (IDdelAgent, dir, false);
+                        res.add(mov); // No si alla hi ha algun agent
+                    }
+                }
+            }
+        }
         // ===============================================
         return res;
     }

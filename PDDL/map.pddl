@@ -13,6 +13,7 @@
     (:init 
 	    ;=================================
 	    ; Estat inicial
+        (EsEspai C1x2) (EsEspai C3x4)
         (EsParet C0x0) (EsParet C0x1)   (EsParet C0x2)   (EsParet C0x3) (EsParet C0x4)   (EsParet C0x5) (EsParet C0x6)   (EsParet C0x7)
         (EsParet C1x0) (EsEspai C1x1)   (EsAgent A2 C1x2)(EsEspai C1x3) (EsEspai C1x4)   (EsEspai C1x5) (EsParet C1x6)   (EsParet C1x7)
         (EsParet C2x0) (EsClau CLa C2x1)(EsEspai C2x2)   (EsEspai C2x3) (EsEspai C2x4)   (EsParet C2x5) (EsSortida C2x6) (EsParet C2x7)
