@@ -9,8 +9,20 @@ public class CercaBFS extends Cerca {
 
     @Override
     public void ferCerca(Mapa inicial, ResultatCerca rc) {
-        
+        ArrayDeque<Mapa> LNO;
+        LNO.addLast(inicial);
+        //HashMap<Mapa> LNT;
+        //Map <Mapa, Mapa> wordsMap = new HashMap;
 
+        //Al rc, fer el setCami utilitzant la classe node. Te pare->un cop tenim el resultat és facil pujar
+    // Al rc afegir inc nodes explorats, i nodes tallats. TAmbe inc updateMemoria. No faran res en el codi
+        while (! LNO.isEmpty()){
+            for (Posicio posAgent : LNO.peek().getAgents()){
+                if (LNO.peek().esSortida(posAgent)){
+                    //Hem Trobat la solució
+                    break;
+                }
+            }
     }
    
 }
