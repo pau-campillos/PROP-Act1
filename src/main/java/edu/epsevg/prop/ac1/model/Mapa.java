@@ -113,7 +113,7 @@ public class Mapa {
      * @return la màscara binària en format int de les claus. Cada clau és un bit, començant per la a (bit menys significant),b,c...
      *    P.ex. Si hi ha 3 claus, a, b i c, i tenim agafada la b i la c, la màscara val 6 (110 en binari)
      *          cba
-     *          110 
+     *          110   
      */
     public int getClausMask() { return clausMask; }
 
@@ -215,29 +215,36 @@ public class Mapa {
             IDdelAgent = IDdelAgent + 1 ;
             
             for (Direccio dir : Direccio.values() ){
-                Posicio aMoure = (p.x + di.x, p.y + di.y);
+                Posicio aMoure = p.translate(dir);
+                //Posicio aMoure = (p.x + di.x, p.y + di.y);
                 //PARET, ESPAI, SORTIDA
                 int casella = getCell(aMoure);
                 if (casella == ESPAI){
-                    Moviment mov (IDdelAgent, dir, false);
-                    res.add(mov); // No si alla hi ha algun agent
+                    if (!hiHaAlgunAgent(aMoure)){
+                        Moviment mov (IDdelAgent, dir, false);
+                        res.add(mov); // No si alla hi ha algun agent
+                    }
                 }
                 else if (casella == SORTIDA){
                     Moviment mov (IDdelAgent, dir, false);
                     res.add(mov);
                 }
                 else if (Character.isUpperCase(casella) && casella.portaObrible()){ // Porta
-                    Moviment mov (IDdelAgent, dir, false);
-                    res.add(mov); // No si alla hi ha algun agent
-                }
-                else if (Character.isLowerCase(casella)){ // Clau
-                    if (!teClau(Character.toLowerCase((char) casella))) {
-                        Moviment mov (IDdelAgent, dir, true);
-                        res.add(mov); // No si alla hi ha algun agent
-                    }
-                    else {
+                    if (!hiHaAlgunAgent(aMoure)){
                         Moviment mov (IDdelAgent, dir, false);
                         res.add(mov); // No si alla hi ha algun agent
+                    }
+                }
+                else if (Character.isLowerCase(casella)){ // Clau
+                    if (!hiHaAlgunAgent(aMoure)){
+                        if (!teClau(Character.toLowerCase((char) casella))) {
+                            Moviment mov (IDdelAgent, dir, true);
+                            res.add(mov); // No si alla hi ha algun agent
+                        }
+                        else {
+                            Moviment mov (IDdelAgent, dir, false);
+                            res.add(mov); // No si alla hi ha algun agent
+                        }
                     }
                 }
             }
@@ -260,9 +267,23 @@ public class Mapa {
         
         // ===============================================
         //@TODO: A IMPLEMENTAR !!!!!!
-        // ===============================================
-        
+        if (o == null){
+            return false;
+        }
+        if (this == o){
+            return true;
+        }
+        if (getClass() != o.getClass()){
+            return false;
+        }
+        if (!agents.equals(o.agents)){
+            return false;
+        }
+        if (!clausMask.equals(o.clausMask)){
+            return false;
+        }
         return true;
+        // ===============================================
     }
 
     @Override
@@ -270,8 +291,12 @@ public class Mapa {
         // ===============================================
         //@TODO: A IMPLEMENTAR !!!!!!
         // ===============================================
-        
-        return 0;
+        int hashRes = 0;
+        for (Posicio p: agents) {
+            hashResres+=p.hashCode();
+        }
+        hashRes+= 100000*clausMask;
+        return hashRes;
     }
 
     @Override
@@ -296,5 +321,12 @@ public class Mapa {
     //===================================================================
     
     //@TODO: (opcionalment) el que cregueu convenient per ampliar la classe.
-
+    private bool hiHaAlgunAgent(Posicio aMoure){
+        for (Posicio posAgent : agents){
+            if (aMoure.equals(posAgent)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
