@@ -9,20 +9,36 @@ public class CercaBFS extends Cerca {
 
     @Override
     public void ferCerca(Mapa inicial, ResultatCerca rc) {
-        ArrayDeque<Mapa> LNO;
-        LNO.addLast(inicial);
-        //HashMap<Mapa> LNT;
+        ArrayDeque<Node> LNO;
+        Node primerNode = new Node (inicial, null, null, 0, 0);
+        LNO.addLast(primerNode);
+        HashMap<Node> LNT = new HashMap;
         //Map <Mapa, Mapa> wordsMap = new HashMap;
 
         //Al rc, fer el setCami utilitzant la classe node. Te pare->un cop tenim el resultat és facil pujar
-    // Al rc afegir inc nodes explorats, i nodes tallats. TAmbe inc updateMemoria. No faran res en el codi
-        while (! LNO.isEmpty()){
-            for (Posicio posAgent : LNO.peek().getAgents()){
-                if (LNO.peek().esSortida(posAgent)){
-                    //Hem Trobat la solució
+        // Al rc afegir inc nodes explorats, i nodes tallats. TAmbe inc updateMemoria. No faran res en el codi
+        while (!LNO.isEmpty()){
+            bool investiguem = true;
+            Node NodeActual = LNO.pop();
+            if (usarLNT == true){
+                investiguem = EstaALaLNT(NodeActual);
+            } 
+            if (investiguem) {
+                
+                if (NodeActual.estat().esMeta()) {
+                    List<Moviment> moviments = ReconstruirCami(NodeActual); 
+                    rc.setCami(moviments);
                     break;
                 }
-            }
+                else {
+                    LNT.put(NodeActual);
+                    List<Moviment> LlistaMoviments = estatActual.getAccionsPossibles();
+                    for (Moviment mov: LlistaMoviments){
+                        Node nouNode = new Node (NodeActual.mou(mov), NodeActual, mov, NodeActual.depth()+1, 0);
+                        if (!esUnCicle(nouNode)) LNO.addLast(nouNode);
+                    }
+                }
+            }    
+        }
     }
-   
 }
