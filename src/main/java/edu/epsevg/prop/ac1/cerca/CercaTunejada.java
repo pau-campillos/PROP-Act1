@@ -24,7 +24,7 @@ public abstract class CercaTunejada extends Cerca {
         return res;
     }
 
-    public boolean ComprobarCicle(Node cami){
+    public boolean ComprobarCicle(Node cami, ResultatCerca rc){
         boolean esUnCicle = false;
         Node actual = cami;
         Mapa aComparar = cami.estat;
@@ -34,6 +34,9 @@ public abstract class CercaTunejada extends Cerca {
                 esUnCicle = true;
                 break;
             }    
+        }
+        if (esUnCicle){
+            rc.incNodesTallats();
         }
         return esUnCicle;
     }

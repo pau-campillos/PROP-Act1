@@ -12,7 +12,6 @@ public class CercaBFS extends CercaTunejada {
 
     @Override
     public void ferCerca(Mapa inicial, ResultatCerca rc) {
-        //ArrayDeque<Node> LNO; Mal
         ArrayDeque<Node> LNO = new ArrayDeque<>();
         Node primerNode = new Node (inicial, null, null, 0, 0);
         LNO.addLast(primerNode);
@@ -28,7 +27,7 @@ public class CercaBFS extends CercaTunejada {
             if (usarLNT == true){
                 investiguem = EstaALaLNT(NodeActual, LNT, rc); // Todo en Java són punteros, no le pasas la hashMap entera
             }  
-            if ((usarLNT && investiguem) || (!usarLNT && !ComprobarCicle(NodeActual))){
+            if ((usarLNT && investiguem) || (!usarLNT && !ComprobarCicle(NodeActual, rc))){
                 if (NodeActual.estat.esMeta()) {
                    List<Moviment> moviments = ReconstruirCami(NodeActual); 
                    rc.setCami(moviments);
@@ -42,7 +41,6 @@ public class CercaBFS extends CercaTunejada {
                     LNO.addLast(nouNode);
                 }
             }
-            
             rc.updateMemoria(LNO.size()+LNT.size());
         }
     }

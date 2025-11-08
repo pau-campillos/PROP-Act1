@@ -21,6 +21,7 @@ public class Mapa {
     private final int m;
     private final int[][] grid; // conservem caràcters ordinals o codis
     private final List<Posicio> agents; // agents indexats a partir de 1 (index 0 -> agent 1)
+    private final List<Posicio> claus;
     private int clausMask;
     private Posicio sortida;
     
@@ -46,6 +47,7 @@ public class Mapa {
         this.m = lines.get(0).length();
         this.grid = new int[n][m];
         this.agents = new ArrayList<>();
+        this.claus = new ArrayList<>();
         this.clausMask = 0;
         
         HashMap<Integer, Posicio> posicioAgent = new HashMap<>();
@@ -68,6 +70,7 @@ public class Mapa {
                             grid[i][j] = ESPAI;
                         } else if (Character.isLowerCase(c)) {
                             grid[i][j] = c; // desem directament la lletra
+                            claus.add(new Posicio(i,j));
                         } else if (Character.isUpperCase(c)) {
                             grid[i][j] = c; // desem directament la lletra
                         } else {
@@ -97,7 +100,9 @@ public class Mapa {
         for (int i = 0; i < n; i++) System.arraycopy(other.grid[i], 0, this.grid[i], 0, m);
         
         this.agents = new ArrayList<>();
+        this.claus = new ArrayList<>();
         for (Posicio p : other.agents) this.agents.add(new Posicio(p.x, p.y));
+        for (Posicio p : other.claus) this.claus.add(new Posicio(p.x, p.y));
         this.clausMask = other.clausMask;
         this.sortida = other.sortida;
     }
@@ -204,6 +209,7 @@ public class Mapa {
                 // recollir
                 nou.setClauRecollida(key);                
                 nou.grid[dest.x][dest.y] = ESPAI;
+                eliminarClauPerTipus(key);
             }
         }
         return nou;
@@ -340,4 +346,45 @@ public class Mapa {
         }
         return false;
     }
+
+    public List<Posicio> claus(){
+        return claus;
+    }
+    
+    private void eliminarClauPerTipus(char keyAEliminar){
+    // Iteramos hacia adelante con el índice 'i'
+    for (int i = 0; i < claus.size(); i++) {
+        Posicio clauPos = claus.get(i);
+        char clauChar = (char) getCell(clauPos);
+        
+        if (keyAEliminar == clauChar){
+            claus.remove(i);
+            i--;
+        }
+    }
+}
+
+    public Integer clauMesPropera(Posicio p){
+        int distanciaMinima = Integer.MAX_VALUE;
+        for (Posicio clau : claus){
+            int distanciaActual = Math.abs(p.x - clau.x) + Math.abs(p.y - clau.y);
+            char clauChar = (char) getCell(clau);
+            if (distanciaActual < distanciaMinima){
+                distanciaMinima = distanciaActual;
+            }
+        }
+        return distanciaMinima;
+    }
+
+    public boolean tenimTotesLesClaus(){
+        if (claus.size() > 0){
+            return false;
+        }
+        else return true;
+    }
+
+    public Posicio getSortida(){
+        return sortida;
+    }
+    
 }

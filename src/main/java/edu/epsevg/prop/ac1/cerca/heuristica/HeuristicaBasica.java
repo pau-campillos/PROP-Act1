@@ -1,8 +1,8 @@
 package edu.epsevg.prop.ac1.cerca.heuristica;
 
 import edu.epsevg.prop.ac1.model.Mapa;
-
-
+import edu.epsevg.prop.ac1.model.Posicio;
+import static java.lang.Integer.min;
 /** 
  * Distància de Manhattan a la clau més propera 
  * (si queden per recollir) o a la sortida.
@@ -10,13 +10,28 @@ import edu.epsevg.prop.ac1.model.Mapa;
 public class HeuristicaBasica implements Heuristica {
     @Override
     public int h(Mapa estat) {
-        
-        
         //@TODO: reemplaceu tot el codi per la vostra heurística.
+        int minim = Integer.MAX_VALUE;
+        int distanciaASortida = Integer.MAX_VALUE;
         
+        if (!estat.tenimTotesLesClaus()) {
+            for (Posicio p : estat.getAgents()){
+                int clauPropera = estat.clauMesPropera(p);
+                minim = min (minim, clauPropera);
+            }
+        }        
+        else {
+            for (Posicio p : estat.getAgents()){
+                if (minim == Integer.MAX_VALUE) {
+                    int distanciaSortidaActual = Math.abs(p.x - estat.getSortida().x) + Math.abs(p.y - estat.getSortida().y);
+                    minim = min (minim, distanciaSortidaActual);
+                }
+            }    
+        }
         if(estat.esMeta()) 
             return 0;
-        else 
-            return 1;
+        else {
+            return minim;
+        } 
     }
 }
