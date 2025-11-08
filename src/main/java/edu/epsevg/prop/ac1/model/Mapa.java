@@ -209,7 +209,6 @@ public class Mapa {
         List<Moviment> res = new ArrayList<>();
         // ===============================================
         //@TODO: A IMPLEMENTAR !!!!!!
-        List<Posicio> agents;
         int IDdelAgent = 0;
         for (Posicio p : agents){
             IDdelAgent = IDdelAgent + 1 ;
@@ -219,30 +218,31 @@ public class Mapa {
                 //Posicio aMoure = (p.x + di.x, p.y + di.y);
                 //PARET, ESPAI, SORTIDA
                 int casella = getCell(aMoure);
+                char casellaChar = (char) casella;
                 if (casella == ESPAI){
                     if (!hiHaAlgunAgent(aMoure)){
-                        Moviment mov (IDdelAgent, dir, false);
+                        Moviment mov = new Moviment(IDdelAgent, dir, false);
                         res.add(mov); // No si alla hi ha algun agent
                     }
                 }
                 else if (casella == SORTIDA){
-                    Moviment mov (IDdelAgent, dir, false);
+                    Moviment mov = new Moviment(IDdelAgent, dir, false);
                     res.add(mov);
                 }
-                else if (Character.isUpperCase(casella) && casella.portaObrible()){ // Porta
+                else if (Character.isUpperCase(casella) && portaObrible(casellaChar)){ // Porta
                     if (!hiHaAlgunAgent(aMoure)){
-                        Moviment mov (IDdelAgent, dir, false);
+                        Moviment mov = new Moviment(IDdelAgent, dir, false);
                         res.add(mov); // No si alla hi ha algun agent
                     }
                 }
                 else if (Character.isLowerCase(casella)){ // Clau
                     if (!hiHaAlgunAgent(aMoure)){
-                        if (!teClau(Character.toLowerCase((char) casella))) {
-                            Moviment mov (IDdelAgent, dir, true);
+                        if (!teClau(Character.toLowerCase(casellaChar))) {
+                            Moviment mov = new Moviment(IDdelAgent, dir, true);
                             res.add(mov); // No si alla hi ha algun agent
                         }
                         else {
-                            Moviment mov (IDdelAgent, dir, false);
+                            Moviment mov = new Moviment(IDdelAgent, dir, false);
                             res.add(mov); // No si alla hi ha algun agent
                         }
                     }
@@ -276,10 +276,11 @@ public class Mapa {
         if (getClass() != o.getClass()){
             return false;
         }
-        if (!agents.equals(o.agents)){
+        Mapa aComparar = (Mapa) o;
+        if (!agents.equals(aComparar.agents)){
             return false;
         }
-        if (!clausMask.equals(o.clausMask)){
+        if (clausMask != (aComparar.clausMask)){
             return false;
         }
         return true;
@@ -293,7 +294,7 @@ public class Mapa {
         // ===============================================
         int hashRes = 0;
         for (Posicio p: agents) {
-            hashResres+=p.hashCode();
+            hashRes+=p.hashCode();
         }
         hashRes+= 100000*clausMask;
         return hashRes;
@@ -321,7 +322,7 @@ public class Mapa {
     //===================================================================
     
     //@TODO: (opcionalment) el que cregueu convenient per ampliar la classe.
-    private bool hiHaAlgunAgent(Posicio aMoure){
+    private boolean hiHaAlgunAgent(Posicio aMoure){
         for (Posicio posAgent : agents){
             if (aMoure.equals(posAgent)) {
                 return true;
