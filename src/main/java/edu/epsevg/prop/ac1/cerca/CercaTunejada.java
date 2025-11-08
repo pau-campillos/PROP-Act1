@@ -17,8 +17,8 @@ public abstract class CercaTunejada extends Cerca {
         Node actual = cami;
         //List<Moviment> res <>(); Mal
         List<Moviment> res = new LinkedList<>();
-        while (actual!=null) {
-            res.addLast(actual.accio);
+        while (actual.pare!=null) {
+            res.addFirst(actual.accio);
             actual = actual.pare;
         }    
         return res;
@@ -38,13 +38,14 @@ public abstract class CercaTunejada extends Cerca {
         return esUnCicle;
     }
 
-    public boolean EstaALaLNT(Node NodeActual, HashMap<Node, Node> LNT){
+    public boolean EstaALaLNT(Node NodeActual, HashMap<Mapa, Node> LNT, ResultatCerca rc){
         boolean investiguem = true;
-        if (!LNT.containsKey(NodeActual)){
+        if (LNT.containsKey(NodeActual.estat)){
             //COMPROBEM, SI TENIM ALTURA MENYS PROFUNDA, HO FEM IGUALMENT
-            int profunditatLNT = LNT.get(NodeActual).depth;
+            int profunditatLNT = LNT.get(NodeActual.estat).depth;
             if (NodeActual.depth >= profunditatLNT){
                 investiguem = false;
+                rc.incNodesTallats();
             }
         }
         return investiguem;
