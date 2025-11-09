@@ -352,15 +352,21 @@ public class Mapa {
         return claus;
     }
 
-    public Integer clauMesPropera(Posicio p){
+    public Posicio clauMesPropera(Posicio origen){
+        Posicio p = null;
         int distanciaMinima = Integer.MAX_VALUE;
         for (Posicio clau : claus){
+            if (p == null){
+                p = clau;
+                distanciaMinima = Math.abs(p.x - clau.x) + Math.abs(p.y - clau.y);
+            }
             int distanciaActual = Math.abs(p.x - clau.x) + Math.abs(p.y - clau.y);
             if (distanciaActual < distanciaMinima){
+                p = clau;
                 distanciaMinima = distanciaActual;
             }
         }
-        return distanciaMinima;
+        return p;
     }
 
     public boolean tenimTotesLesClaus(){
