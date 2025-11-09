@@ -207,8 +207,8 @@ public class Mapa {
             char key = (char) cell;
             if (!nou.teClau(key)) {
                 // recollir
-                nou.eliminarClauPerTipus(key);
-                nou.setClauRecollida(key);        
+                nou.claus.remove(dest);
+                nou.setClauRecollida(key);
                 nou.grid[dest.x][dest.y] = ESPAI;
                 
             }
@@ -348,22 +348,9 @@ public class Mapa {
         return false;
     }
 
-    public List<Posicio> claus(){
+    public List<Posicio> getClaus(){
         return claus;
     }
-    
-    private void eliminarClauPerTipus(char keyAEliminar){
-    // Iteramos hacia adelante con el índice 'i'
-    for (int i = 0; i < claus.size(); i++) {
-        Posicio clauPos = claus.get(i);
-        char clauChar = (char) getCell(clauPos);
-        
-        if (keyAEliminar == clauChar){
-            claus.remove(i);
-            i--;
-        }
-    }
-}
 
     public Integer clauMesPropera(Posicio p){
         int distanciaMinima = Integer.MAX_VALUE;
@@ -388,7 +375,6 @@ public class Mapa {
         return sortida;
     }
     
-
     // ELIMINAR
     public Integer getSizeClaus(){
         return claus.size();

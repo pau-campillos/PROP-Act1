@@ -34,19 +34,12 @@ public class CercaAStar extends CercaTunejada {
         while (!LNO.isEmpty()){
             boolean investiguem = true;
             Node NodeActual = LNO.poll();
-           
+            rc.incNodesExplorats();
             if (usarLNT == true){
                 investiguem = EstaALaLNT(NodeActual, LNT, rc); // Todo en Java són punteros, no le pasas la hashMap entera
             }  
             if ((usarLNT && investiguem) || (!usarLNT && !ComprobarCicle(NodeActual, rc))){
-                int h_actual = heur.h(NodeActual.estat);
-int g_actual = NodeActual.depth;
-int f_actual = NodeActual.g; // Asumimos que Node.g almacena f(n) correctamente
-
-System.out.println("Node: " + NodeActual.estat + " | f(n): " + f_actual + " | g(n): " + g_actual + " | h(n): " + h_actual);
-
-
-                rc.incNodesExplorats();
+                
                 if (NodeActual.estat.esMeta()) {
                    List<Moviment> moviments = ReconstruirCami(NodeActual); 
                    rc.setCami(moviments);
