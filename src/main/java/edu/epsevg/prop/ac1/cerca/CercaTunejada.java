@@ -46,7 +46,11 @@ public abstract class CercaTunejada extends Cerca {
         if (LNT.containsKey(NodeActual.estat)){
             //COMPROBEM, SI TENIM ALTURA MENYS PROFUNDA, HO FEM IGUALMENT
             int profunditatLNT = LNT.get(NodeActual.estat).depth;
-            if (NodeActual.depth >= profunditatLNT){
+            if (NodeActual.g != 0 && NodeActual.g >= LNT.get(NodeActual.estat).g){
+                investiguem = false;
+                rc.incNodesTallats();
+            }
+            else if (NodeActual.depth >= profunditatLNT){
                 investiguem = false;
                 rc.incNodesTallats();
             }

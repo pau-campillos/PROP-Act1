@@ -12,7 +12,6 @@ public class HeuristicaBasica implements Heuristica {
     public int h(Mapa estat) {
         //@TODO: reemplaceu tot el codi per la vostra heurística.
         int minim = Integer.MAX_VALUE;
-        int distanciaASortida = Integer.MAX_VALUE;
         
         if (!estat.tenimTotesLesClaus()) {
             for (Posicio p : estat.getAgents()){
@@ -22,16 +21,10 @@ public class HeuristicaBasica implements Heuristica {
         }        
         else {
             for (Posicio p : estat.getAgents()){
-                if (minim == Integer.MAX_VALUE) {
-                    int distanciaSortidaActual = Math.abs(p.x - estat.getSortida().x) + Math.abs(p.y - estat.getSortida().y);
-                    minim = min (minim, distanciaSortidaActual);
-                }
+                int distanciaSortidaActual = Math.abs(p.x - estat.getSortida().x) + Math.abs(p.y - estat.getSortida().y);
+                minim = min (minim, distanciaSortidaActual);
             }    
         }
-        if(estat.esMeta()) 
-            return 0;
-        else {
-            return minim;
-        } 
+        return minim;
     }
 }

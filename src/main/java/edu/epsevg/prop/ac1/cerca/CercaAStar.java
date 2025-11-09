@@ -21,8 +21,10 @@ public class CercaAStar extends CercaTunejada {
     @Override
     public  void ferCerca(Mapa inicial, ResultatCerca rc) {
          
-        //ProrityQueue<Node> LNO = new ProrityQueue<>();
-        PriorityQueue<Node> LNO = new PriorityQueue<>((n1, n2) -> Integer.compare(n1.g, n2.g));
+        PriorityQueue<Node> LNO = new PriorityQueue<>(
+            (n1, n2) -> Integer.compare(n1.g, n2.g)
+        );
+
         Node primerNode = new Node (inicial, null, null, 0, heur.h(inicial));
         LNO.add(primerNode);
         HashMap<Mapa, Node> LNT = new HashMap<>();
@@ -32,11 +34,19 @@ public class CercaAStar extends CercaTunejada {
         while (!LNO.isEmpty()){
             boolean investiguem = true;
             Node NodeActual = LNO.poll();
-            rc.incNodesExplorats();
+           
             if (usarLNT == true){
                 investiguem = EstaALaLNT(NodeActual, LNT, rc); // Todo en Java són punteros, no le pasas la hashMap entera
             }  
             if ((usarLNT && investiguem) || (!usarLNT && !ComprobarCicle(NodeActual, rc))){
+                int h_actual = heur.h(NodeActual.estat);
+int g_actual = NodeActual.depth;
+int f_actual = NodeActual.g; // Asumimos que Node.g almacena f(n) correctamente
+
+System.out.println("Node: " + NodeActual.estat + " | f(n): " + f_actual + " | g(n): " + g_actual + " | h(n): " + h_actual);
+
+
+                rc.incNodesExplorats();
                 if (NodeActual.estat.esMeta()) {
                    List<Moviment> moviments = ReconstruirCami(NodeActual); 
                    rc.setCami(moviments);
@@ -45,13 +55,12 @@ public class CercaAStar extends CercaTunejada {
                 LNT.put(NodeActual.estat, NodeActual);
       
                 List<Moviment> LlistaMoviments = NodeActual.estat.getAccionsPossibles();
+
+                //int fhPare = heur.h(NodeActual.estat);
                 for (Moviment mov: LlistaMoviments){
-                    int fh = heur.h(NodeActual.estat.mou(mov));
-                    int fhPare = 0;
-                    if (NodeActual.pare != null) {
-                        fhPare = heur.h(NodeActual.pare.estat);
-                    }
-                    Node nouNode = new Node (NodeActual.estat.mou(mov), NodeActual, mov, NodeActual.depth+1, fh+NodeActual.g+1-fhPare);
+                    Mapa nouEstat = new Mapa(NodeActual.estat.mou(mov));
+                    int fh = heur.h(nouEstat);
+                    Node nouNode = new Node (nouEstat, NodeActual, mov, NodeActual.depth+1, fh+NodeActual.depth+1);
                     LNO.add(nouNode);
                 }
             }

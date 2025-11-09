@@ -207,9 +207,10 @@ public class Mapa {
             char key = (char) cell;
             if (!nou.teClau(key)) {
                 // recollir
-                nou.setClauRecollida(key);                
+                nou.eliminarClauPerTipus(key);
+                nou.setClauRecollida(key);        
                 nou.grid[dest.x][dest.y] = ESPAI;
-                eliminarClauPerTipus(key);
+                
             }
         }
         return nou;
@@ -368,7 +369,6 @@ public class Mapa {
         int distanciaMinima = Integer.MAX_VALUE;
         for (Posicio clau : claus){
             int distanciaActual = Math.abs(p.x - clau.x) + Math.abs(p.y - clau.y);
-            char clauChar = (char) getCell(clau);
             if (distanciaActual < distanciaMinima){
                 distanciaMinima = distanciaActual;
             }
@@ -377,6 +377,7 @@ public class Mapa {
     }
 
     public boolean tenimTotesLesClaus(){
+        
         if (claus.size() > 0){
             return false;
         }
@@ -387,4 +388,9 @@ public class Mapa {
         return sortida;
     }
     
+
+    // ELIMINAR
+    public Integer getSizeClaus(){
+        return claus.size();
+    }
 }
