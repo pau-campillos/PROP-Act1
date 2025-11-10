@@ -16,8 +16,8 @@ public class CercaBFS extends CercaTunejada {
         Node primerNode = new Node (inicial, null, null, 0, 0);
         LNO.addLast(primerNode);
         HashMap<Mapa, Node> LNT = new HashMap<>();
-        int numeroBranques = 0;
-        int contador = 0;
+        //int numeroBranques = 0;
+        //int contador = 0;
         //Al rc, fer el setCami utilitzant la classe node. Te pare->un cop tenim el resultat és facil pujar
         // Al rc afegir inc nodes explorats, i nodes tallats. TAmbe inc updateMemoria. No faran res en el codi
         while (!LNO.isEmpty()){
@@ -37,19 +37,17 @@ public class CercaBFS extends CercaTunejada {
                 LNT.put(NodeActual.estat, NodeActual);
       
                 List<Moviment> LlistaMoviments = NodeActual.estat.getAccionsPossibles();
-                //int branques = 0;
-                contador++;
+                //contador++;
                 for (Moviment mov: LlistaMoviments){
                     Node nouNode = new Node (NodeActual.estat.mou(mov), NodeActual, mov, NodeActual.depth+1, 0);
                     LNO.addLast(nouNode);
-                    numeroBranques++;
+                    //numeroBranques++;
                 }
-                //numeroBranques += branques;
             }
             rc.updateMemoria(LNO.size()+LNT.size());
         }
-        double factorBrancament = numeroBranques/contador;
-        System.out.printf("Factor de brancament: %.3f%n", factorBrancament);
-        System.out.println("Branques :" + numeroBranques + " Nodes explorats: " + contador);
+        //double factorBrancament = numeroBranques/contador;
+        //System.out.printf("Factor de brancament: %.3f%n", factorBrancament);
+        //System.out.println("Branques :" + numeroBranques + " Nodes explorats: " + contador);
     }
 }
