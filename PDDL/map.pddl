@@ -20,7 +20,11 @@
         (EsParet C3x0) (EsEspai C3x1)   (EsEspai C3x2)   (EsEspai C3x3) (EsAgent A1 C3x4)(EsEspai C3x5) (EsPorta PA C3x6)(EsParet C3x7)
         (EsParet C4x0) (EsParet C4x1)   (EsParet C4x2)   (EsParet C4x3) (EsParet C4x4)   (EsParet C4x5) (EsParet C4x6)   (EsParet C4x7)
         
+        (TeAlgunAgent C1x2) (TeAlgunAgent C3x4)
+
         (ClauDeLaPorta CLa PA)
+
+        ; Assignem quines caselles seran agent i quines no
 
 		;=================================
 		; Veinatge de caselles

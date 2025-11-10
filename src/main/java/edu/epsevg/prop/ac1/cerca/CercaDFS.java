@@ -12,7 +12,7 @@ public class CercaDFS extends CercaTunejada {
     @Override
     public void ferCerca(Mapa inicial, ResultatCerca rc) {
 
-        int limit = 20; //LIMIT PROFUNDITAT
+        int limit = 50; //LIMIT PROFUNDITAT
 
         Stack<Node> LNO = new Stack<>();
         Node primerNode = new Node (inicial, null, null, 0, 0);

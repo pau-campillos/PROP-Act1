@@ -15,7 +15,7 @@ public class CercaIDS extends CercaTunejada {
     public void ferCerca(Mapa inicial, ResultatCerca rc) {
         int i = 0;
         boolean solucio = false;
-        while (!solucio && i<20) {
+        while (!solucio && i<50) {
             Stack<Node> LNO = new Stack<>();
             Node primerNode = new Node (inicial, null, null, 0, 0);
             LNO.add(primerNode);

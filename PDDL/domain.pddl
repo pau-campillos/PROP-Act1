@@ -12,12 +12,14 @@
 
 		(EsSortida ?casella - TCASELLA)
 		(EsAgent ?agent - TAGENT ?casella - TCASELLA)
+		(TeAlgunAgent ?casella - TCASELLA)
 		(ClauAgafada ?clau - TCLAU)
     )
 	(:action Moure
         :parameters (?agent - TAGENT ?deCasella ?aCasella - TCASELLA)
         :precondition (and 
 			(EsEspai ?aCasella) 
+			(not (TeAlgunAgent ?aCAsella))
 			(EsAgent ?agent ?deCasella)
 			(or 
 				(Veina ?aCasella ?deCasella)
@@ -26,13 +28,15 @@
 		)
         :effect (and 
 			(not (EsAgent ?agent ?deCasella))
+			(TeAlgunAgent ?aCAsella)
 			(EsAgent ?agent ?aCasella)
         )
     )
 	(:action MoureiAgafarClau
         :parameters (?agent - TAGENT ?deCasella ?aCasella - TCASELLA ?clau - TCLAU)
         :precondition (and 
-			(EsClau ?clau ?aCasella) 
+			(EsClau ?clau ?aCasella)
+			(not (TeAlgunAgent ?aCAsella))
 			(EsAgent ?agent ?deCasella)
 			(or 
 				(Veina ?aCasella ?deCasella)
@@ -41,6 +45,7 @@
 		)
         :effect (and 
 			(not (EsAgent ?agent ?deCasella))
+			(TeAlgunAgent ?aCAsella)
 			(EsAgent ?agent ?aCasella)
 			(ClauAgafada ?clau)
         )
@@ -49,6 +54,7 @@
         :parameters (?agent - TAGENT ?deCasella ?aCasella - TCASELLA ?porta - TPORTA ?clau - TCLAU)
         :precondition (and
 			(EsAgent ?agent ?deCasella)
+			(not (TeAlgunAgent ?aCAsella))
 			(EsPorta ?porta ?aCasella)
 			(ClauDeLaPorta ?clau ?porta)
 			(ClauAgafada ?clau)
@@ -59,6 +65,7 @@
 		)
         :effect (and 
 			(not (EsAgent ?agent ?deCasella))
+			(TeAlgunAgent ?aCAsella)
 			(EsAgent ?agent ?aCasella)
         )
     )
