@@ -46,8 +46,8 @@ public class Main {
         System.out.println("==                        MAPA C                                ==");
         System.out.println("==================================================================");
         executarIRecopilarResultats("BFS", new CercaBFS(usarLNT), mapaC, "mapC", rows);
-        executarIRecopilarResultats("DFS", new CercaDFS(usarLNT), mapaC, "mapC", rows);
-        executarIRecopilarResultats("IDS", new CercaIDS(usarLNT), mapaC, "mapC", rows);
+        //executarIRecopilarResultats("DFS", new CercaDFS(usarLNT), mapaC, "mapC", rows);
+        //executarIRecopilarResultats("IDS", new CercaIDS(usarLNT), mapaC, "mapC", rows);
         executarIRecopilarResultats("A* Basica", new CercaAStar(usarLNT, new HeuristicaBasica()), mapaC, "mapC", rows);
         executarIRecopilarResultats("A* Avancada", new CercaAStar(usarLNT, new HeuristicaAvancada()), mapaC, "mapC", rows);
         
@@ -55,8 +55,8 @@ public class Main {
         System.out.println("==                        MAPA D                                ==");
         System.out.println("==================================================================");
         executarIRecopilarResultats("BFS", new CercaBFS(usarLNT), mapaD, "mapD", rows);
-        executarIRecopilarResultats("DFS", new CercaDFS(usarLNT), mapaD, "mapD", rows);
-        executarIRecopilarResultats("IDS", new CercaIDS(usarLNT), mapaD, "mapD", rows);
+        //executarIRecopilarResultats("DFS", new CercaDFS(usarLNT), mapaD, "mapD", rows);
+        //executarIRecopilarResultats("IDS", new CercaIDS(usarLNT), mapaD, "mapD", rows);
         executarIRecopilarResultats("A* Basica", new CercaAStar(usarLNT, new HeuristicaBasica()), mapaD, "mapD", rows);
         executarIRecopilarResultats("A* Avancada", new CercaAStar(usarLNT, new HeuristicaAvancada()), mapaD, "mapD", rows);
         

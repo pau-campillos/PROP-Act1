@@ -22,19 +22,31 @@ public class HeuristicaAvancada implements Heuristica {
             distSordira = min (distSordira, distanciaSortidaActual);
         }
 
-        int camiClaus = 0;
-        if (!estat.tenimTotesLesClaus()) {
-            for (Posicio c : estat.getClaus()) { 
-                int minCami = Integer.MAX_VALUE;
-                for (Posicio a : estat.getAgents()) {
-                    int dist = Math.abs(c.x - a.x) + Math.abs(c.y - a.y);
-                    minCami = min(minCami, dist); 
-                }    
-                camiClaus += minCami;  
-            }
-        }    
+        int minCamiTotal = Integer.MAX_VALUE;
+        Posicio primeraLlave = null;
 
-        int minim = camiClaus + distSordira;
+        // 1. Buscar la llave más cercana a cualquier agente
+        for (Posicio c : estat.getClaus()) { 
+            for (Posicio a : estat.getAgents()) {
+                int dist = Math.abs(c.x - a.x) + Math.abs(c.y - a.y);
+                if (dist < minCamiTotal) {
+                    minCamiTotal = dist;
+                    primeraLlave = c;
+                }
+            }
+        }
+
+        // 2. Calcular distancia desde la primera llave a las demás llaves
+        int camiLlavesRestantes = 0;
+        for (Posicio c : estat.getClaus()) {
+            if (!c.equals(primeraLlave)) {
+                int dist = Math.abs(c.x - primeraLlave.x) + Math.abs(c.y - primeraLlave.y);
+                camiLlavesRestantes += dist;
+            }
+        }
+
+        int minim = minCamiTotal + camiLlavesRestantes + distSordira;
+
         return minim;
     }
 }
